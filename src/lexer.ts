@@ -2,6 +2,10 @@ import Lexer from 'lex';
 
 export class AbsynthLexer {
     private lexer: Lexer;
+    // private first_column = 0;
+    // private first_line = 1;
+    // private last_line = 1;
+    // private last_column = 0;
     constructor() {
         this.lexer = new Lexer();
         (this.lexer as any).yyloc = {
@@ -20,10 +24,6 @@ export class AbsynthLexer {
             this.yytext = lexeme;
             return 'NUMBER';
         });
-        this.lexer.addRule(/\s+/, function (lexeme: string) {
-            this.yytext = lexeme;
-            return 'SPACE';
-        });
         this.lexer.addRule(/\'(\\.|[^'])*\'/, function (lexeme: string) {
             this.yytext = lexeme.substring(1, lexeme.length - 1);
             return 'STRING';
@@ -31,6 +31,10 @@ export class AbsynthLexer {
         this.lexer.addRule(/let/, function (lexeme: string) {
             this.yytext = lexeme;
             return 'T_LET';
+        });
+        this.lexer.addRule(/(declare|model)/, function (lexeme: string) {
+            this.yytext = lexeme;
+            return 'T_KEYWORD';
         });
         this.lexer.addRule(/\+/, function (lexeme: string) {
             this.yytext = lexeme;
@@ -72,9 +76,25 @@ export class AbsynthLexer {
             this.yytext = lexeme;
             return 'T_COMMA';
         });
+        // this.lexer.addRule(/\n/, function (lexeme: string) {
+        //     this.yytext = lexeme;
+        //     return 'T_NEW_LINE';
+        // });
+        this.lexer.addRule(/{/, function (lexeme: string) {
+            this.yytext = lexeme;
+            return 'T_BRACE_OPEN';
+        });
+        this.lexer.addRule(/}/, function (lexeme: string) {
+            this.yytext = lexeme;
+            return 'T_BRACE_CLOSE';
+        });
         this.lexer.addRule(/$/, function () {
             return 'EOF';
         });
+    }
+
+    setInput = (src: string) => {
+        this.lexer.setInput(src);
     }
 
     lexerInstance() {
@@ -96,7 +116,7 @@ export class AbsynthLexer {
             try {
                 this.lexer.lex();
             } catch (e) {
-                console.log(e);
+                console.warn(e);
                 return this.lexer.index;
             }
         }

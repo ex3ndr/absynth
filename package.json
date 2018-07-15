@@ -25,7 +25,8 @@
                 "aliases": [
                     "Absynth",
                     "absynth"
-                ]
+                ],
+                "configuration": "./src/language-configuration.json"
             }
         ],
         "grammars": [

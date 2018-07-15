@@ -22,4 +22,31 @@ describe('Parser', () => {
         res = parser.parse('println(123,3444)');
         expect(res).toMatchSnapshot();
     });
+    it('should parse calls multiple lines', () => {
+        let parser = new AbsynthParser();
+        let res = parser.parse('println()\nprintln()');
+        expect(res).toMatchSnapshot();
+    });
+
+    it('should handle empty lines', () => {
+        let parser = new AbsynthParser();
+        let res = parser.parse('\n\nprintln()\nprintln()');
+        expect(res).toMatchSnapshot();
+    });
+
+    it('should handle braces', () => {
+        let parser = new AbsynthParser();
+        let res = parser.parse('{ \n\nprintln()\nprintln() }');
+        expect(res).toMatchSnapshot();
+        res = parser.parse('{println()\nprintln()}');
+        expect(res).toMatchSnapshot();
+        res = parser.parse('{\nprintln();\n}');
+        expect(res).toMatchSnapshot();
+    });
+
+    it('should handle modules', () => {
+        let parser = new AbsynthParser();
+        let res = parser.parse('model \'Module\' { }');
+        expect(res).toMatchSnapshot();
+    });
 });

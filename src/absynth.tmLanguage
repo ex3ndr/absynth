@@ -25,6 +25,13 @@
 			<key>name</key>
 			<string>variable.function.language.absynth</string>
 		</dict>
+		<key>keyword</key>
+		<dict>
+			<key>match</key>
+			<string>\b(?:declare|model|let)\b</string>
+			<key>name</key>
+			<string>keyword.language.absynth</string>
+		</dict>
 		<key>constant</key>
 		<dict>
 			<key>match</key>
@@ -112,6 +119,10 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#keyword</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>#identifier</string>

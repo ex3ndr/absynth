@@ -1,5 +1,6 @@
 import { AbsynthLexer } from './lexer';
 import { Parser } from 'jison-gho';
+import Lexer from 'lex';
 
 export interface ASTNode {
     type: string;
@@ -38,6 +39,12 @@ export interface ASTOperation extends ASTNode {
     right: ASTNode;
 }
 
+interface ParserException {
+    hash: {
+        recoverable: boolean;
+        lexer: Lexer;
+    };
+}
 export class AbsynthParser {
     private lexer: AbsynthLexer;
     private parser: Parser;
@@ -46,21 +53,39 @@ export class AbsynthParser {
         this.lexer = new AbsynthLexer();
         this.parser = new Parser({
             bnf: {
-                'program': [['statements EOF', 'return {type: \'program\', value: $1};']],
+                'program': [['sections EOF', 'return {type: \'program\', value: $1};']],
+
+                'sections': [
+                    ['model', '$$=$1'],
+                    ['block', '$$=$1'],
+                    ['statements', '$$ = $1']
+                ],
+
+                'model': [
+                    ['T_KEYWORD constant_string block', '$$ = {type:\'model\', name: $2, statements: $3};']
+                ],
+
+                'block': [
+                    ['T_BRACE_OPEN statements T_BRACE_CLOSE', '$$ = $2'],
+                    ['T_BRACE_OPEN T_BRACE_CLOSE', '$$ = {type:\'statements\', statements: []};'],
+                    // ['statements', '$$ = $1']
+                ],
 
                 'statements': [
-                    ['statements T_SEMICOLON statement', '$$ = {type:\'statements\', statements: [...$1.statements, $3]};'],
-                    ['statements T_SEMICOLON', '$$ = $1;'],
-                    ['statement', '$$ = {type:\'statements\', statements: [$1]};']
+                    ['statements statement', '$$ = {type:\'statements\', statements: [...$1.statements, $2]};'],
+                    ['statement', '$$ = {type:\'statements\', statements: [$1]};'],
+                    // ['', '$$ = {type:\'statements\', statements: []};']
                 ],
 
                 'statement': [
                     ['call', '$$ = $1;'],
-                    ['assignment', '$$ = $1;']
+                    ['call T_SEMICOLON', '$$ = $1;'],
+                    ['assignment', '$$ = $1;'],
+                    ['assignment T_SEMICOLON', '$$ = $1;']
                 ],
 
                 'call': [
-                    ['IDENTIFIER T_BRACKET_OPEN arguments T_BRACKET_CLOSE', '$$ = {type:\'call\', name: $1, arguments: $3};']
+                    ['IDENTIFIER T_BRACKET_OPEN arguments T_BRACKET_CLOSE', '$$ = {type:\'call\', name: $1, arguments: $3};'],
                 ],
 
                 'arguments': [
@@ -86,6 +111,7 @@ export class AbsynthParser {
                     ['constant', '$$ = $1;']
                 ],
                 'constant': [
+                    ['IDENTIFIER', '$$ = {type: \'reference\', name: yytext};'],
                     ['constant_number', '$$ = $1;'],
                     ['constant_string', '$$ = $1;'],
                 ],
@@ -109,7 +135,11 @@ export class AbsynthParser {
         try {
             this.parser.parse(source);
         } catch (e) {
-            return this.lexer.lexerInstance().index;
+            // console.warn(e);
+            let ex = e as ParserException;
+            // console.warn(ex.hash.lexer.index);
+            // console.warn(ex.hash.lexer !== this.lexer.lexerInstance());
+            return ex.hash.lexer.index;
         }
         return -1;
     }

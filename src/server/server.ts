@@ -129,13 +129,13 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     let diagnostics: Diagnostic[] = [];
     let parser = new AbsynthParser();
     let res = parser.parseDiagnostics(text);
-    
+
     if (res >= 0) {
         let diagnosic: Diagnostic = {
             severity: DiagnosticSeverity.Error,
             range: {
-                start: textDocument.positionAt(res),
-                end: textDocument.positionAt(res + 1)
+                start: textDocument.positionAt(res - 1),
+                end: textDocument.positionAt(res)
             },
             message: `Unexpected symbol`,
             source: 'absynth'

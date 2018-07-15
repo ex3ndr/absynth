@@ -60,6 +60,102 @@ Object {
 }
 `;
 
+exports[`Parser should handle braces 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should handle braces 2`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should handle braces 3`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should handle empty lines 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should handle modules 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "name": Object {
+      "type": "string",
+      "value": "Module",
+    },
+    "statements": Object {
+      "statements": Array [],
+      "type": "statements",
+    },
+    "type": "model",
+  },
+}
+`;
+
 exports[`Parser should parse calls 1`] = `
 Object {
   "type": "program",
@@ -92,6 +188,27 @@ Object {
             "value": 3444,
           },
         ],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should parse calls multiple lines 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+      Object {
+        "arguments": Array [],
         "name": "println",
         "type": "call",
       },

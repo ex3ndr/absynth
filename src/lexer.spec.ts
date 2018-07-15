@@ -11,10 +11,13 @@ describe('Lexer', () => {
     it('should parse strings', () => {
         expect(lexer.lex('\'Some weird string\'')).toEqual(['STRING']);
     });
-    it('should parce idenitfiers', () => {
+    it('should parse idenitfiers', () => {
         expect(lexer.lex('println')).toEqual(['IDENTIFIER']);
     });
-    it('should parce backets', () => {
+    it('should parse backets', () => {
         expect(lexer.lex('(println)')).toEqual(['T_BRACKET_OPEN', 'IDENTIFIER', 'T_BRACKET_CLOSE']);
+    });
+    it('should parse keywords', () => {
+        expect(lexer.lex('model \'Module\'')).toEqual(['T_KEYWORD', 'STRING']);
     });
 });

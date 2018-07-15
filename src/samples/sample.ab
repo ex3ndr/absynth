@@ -1,1 +1,6 @@
-let a = ''
+declare 'Model' {
+    println(asd, 'asd');
+    printaaa();
+    asdadasd();
+    let a = '';
+}
