@@ -12,6 +12,7 @@ import {
     TextDocumentPositionParams
 } from 'vscode-languageserver/lib/main';
 import { AbsynthLexer } from '../lexer';
+import { AbsynthParser } from '../parser';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -126,10 +127,9 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     // The validator creates diagnostics for all uppercase words length 2 and more
     let text = textDocument.getText();
     let diagnostics: Diagnostic[] = [];
-
-    let lexer = new AbsynthLexer();
-    let res = lexer.lexDiagnostics(text);
-
+    let parser = new AbsynthParser();
+    let res = parser.parseDiagnostics(text);
+    
     if (res >= 0) {
         let diagnosic: Diagnostic = {
             severity: DiagnosticSeverity.Error,
@@ -138,7 +138,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
                 end: textDocument.positionAt(res + 1)
             },
             message: `Unexpected symbol`,
-            source: 'ex'
+            source: 'absynth'
         };
         diagnostics.push(diagnosic);
     }

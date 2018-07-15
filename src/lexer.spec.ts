@@ -15,6 +15,6 @@ describe('Lexer', () => {
         expect(lexer.lex('println')).toEqual(['IDENTIFIER']);
     });
     it('should parce backets', () => {
-        expect(lexer.lex('(println)')).toEqual(['BRACKET_OPEN', 'IDENTIFIER', 'BRACKET_CLOSE']);
+        expect(lexer.lex('(println)')).toEqual(['T_BRACKET_OPEN', 'IDENTIFIER', 'T_BRACKET_CLOSE']);
     });
 });

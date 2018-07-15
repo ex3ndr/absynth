@@ -11,7 +11,7 @@ declare module 'lex' {
     export = Lexer;
 }
 
-declare module 'jison' {
+declare module 'jison-gho' {
 
     export interface Grammar {
         lex?: {
@@ -19,7 +19,8 @@ declare module 'jison' {
         },
         bnf: {
             [key: string]: string[][]
-        }
+        },
+        operators?: string[][]
     }
     export class Parser {
         constructor(grammar: Grammar)

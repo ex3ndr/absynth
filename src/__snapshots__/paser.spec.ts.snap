@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser parse simple assignment expression with calculus 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "left": Object {
+          "name": "i",
+          "type": "declaration",
+        },
+        "right": Object {
+          "left": Object {
+            "type": "number",
+            "value": 123,
+          },
+          "op": "+",
+          "right": Object {
+            "left": Object {
+              "type": "number",
+              "value": 1,
+            },
+            "op": "/",
+            "right": Object {
+              "type": "number",
+              "value": 2,
+            },
+            "type": "operation",
+          },
+          "type": "operation",
+        },
+        "type": "assignment",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser parse simple assignment expression with strings 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "left": Object {
+          "name": "i",
+          "type": "declaration",
+        },
+        "right": Object {
+          "type": "string",
+          "value": "123",
+        },
+        "type": "assignment",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should parse calls 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should parse calls 2`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "arguments": Array [
+          Object {
+            "type": "number",
+            "value": 123,
+          },
+          Object {
+            "type": "number",
+            "value": 3444,
+          },
+        ],
+        "name": "println",
+        "type": "call",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
+
+exports[`Parser should parse statements 1`] = `
+Object {
+  "type": "program",
+  "value": Object {
+    "statements": Array [
+      Object {
+        "left": Object {
+          "name": "i",
+          "type": "declaration",
+        },
+        "right": Object {
+          "left": Object {
+            "type": "number",
+            "value": 123,
+          },
+          "op": "+",
+          "right": Object {
+            "left": Object {
+              "type": "number",
+              "value": 1,
+            },
+            "op": "/",
+            "right": Object {
+              "type": "number",
+              "value": 2,
+            },
+            "type": "operation",
+          },
+          "type": "operation",
+        },
+        "type": "assignment",
+      },
+      Object {
+        "left": Object {
+          "name": "j",
+          "type": "declaration",
+        },
+        "right": Object {
+          "type": "number",
+          "value": 0,
+        },
+        "type": "assignment",
+      },
+    ],
+    "type": "statements",
+  },
+}
+`;
