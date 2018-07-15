@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "lib": ["es5", "es6", "dom", "esnext.asynciterable"],
+    "outDir": "./build/",
+    "rootDir": "./src/",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": ["node_modules/@types"],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ],
+  "files": [
+    "./src/typings.d.ts"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}
