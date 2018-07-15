@@ -6,7 +6,7 @@ describe('Lexer', () => {
         lexer = new AbsynthLexer();
     });
     it('should parse numbers and hex numbers', () => {
-        expect(lexer.lex('0xAAA 0xBBB  123')).toEqual(['NUMBER_HEX', 'SPACE', 'NUMBER_HEX', 'SPACE', 'NUMBER']);
+        expect(lexer.lex('0xAAA 0xBBB  123')).toEqual(['NUMBER_HEX', 'NUMBER_HEX', 'NUMBER']);
     });
     it('should parse strings', () => {
         expect(lexer.lex('\'Some weird string\'')).toEqual(['STRING']);
