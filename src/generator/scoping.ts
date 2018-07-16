@@ -1,8 +1,8 @@
-import { ASTModel, ASTProgram, ASTType } from '../ast';
+import { ASTModel, ASTProgram, ASTType, ASTNode, ASTEnum } from '../ast';
 import { GeneratorException } from './generator';
 
 export class AbsynthScope {
-    declaredModels = new Map<string, ASTModel>();
+    declaredModels = new Map<string, ASTModel | ASTEnum>();
 
     collectDeclarations(src: ASTProgram) {
         for (let v of src.value) {
@@ -13,6 +13,12 @@ export class AbsynthScope {
                 }
                 this.declaredModels.set(v.name.name, v);
                 console.log(v.name.name);
+            }
+            if (v.type === 'enum') {
+                if (this.declaredModels.has(v.name.name)) {
+                    throw new GeneratorException('Already defined', v);
+                }
+                this.declaredModels.set(v.name.name, v);
             }
         }
     }
@@ -26,13 +32,13 @@ export class AbsynthScope {
             }
         }
     }
-    
+
     private resolveReference(src: ASTType) {
         if (src.type === 'type_reference') {
             if (!this.declaredModels.has(src.id.name)) {
                 throw new GeneratorException('Unable to find ' + src.id.name, src);
             }
-            src.resolvedType = this.declaredModels.get(src.id.name);
+            src.resolvedType = this.declaredModels.get(src.id.name)!!;
         }
     }
 }

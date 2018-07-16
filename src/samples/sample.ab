@@ -1,18 +1,9 @@
-println(a + '');
-println('asd' + 'aaa');
-
-let a = '';
-
-{
-    let a = '';
-    println(a + '')
-}
+enum UserStatus = 'PENDING' | 'ACTIVATED' | 'SUSPENDED';
 
 model User {
     primary field id: int!
+    field status: UserStatus!
 }
-
-enum A = 'hello' | 'world' | 'now';
 
 model Profile {
     primary field id: int!
@@ -31,8 +22,11 @@ model Organization {
     primary field id: int!
 }
 
+enum ConversationType = 'private' | 'anonymous';
+
 model Conversation {
     primary field id: int!
+    field type: ConversationType!
     field title: string!
     field seq: int!
     field member1: User

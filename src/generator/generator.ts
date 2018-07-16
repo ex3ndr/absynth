@@ -46,7 +46,11 @@ function generateReferencedType(src: ASTType): string {
             return 'string';
         }
     } else if (src.type === 'type_reference') {
-        return resolveModelKeyType(src.resolvedType!!);
+        if (src.resolvedType!!.type === 'model') {
+            return resolveModelKeyType(src.resolvedType!! as ASTModel);
+        } else if (src.resolvedType.type === 'enum') {
+            return src.resolvedType.name.name;
+        }
     }
     throw new GeneratorException('Unable to resolve type', src);
 }
@@ -79,7 +83,9 @@ function generateModel(src: ASTModel): string {
         }
         let name = f.name.name;
         if (f.field_type.type === 'type_reference') {
-            name = f.name.name + capitalize(resolveModelKeyName(f.field_type.resolvedType!!));
+            if (f.field_type.resolvedType!!.type === 'model') {
+                name = f.name.name + capitalize(resolveModelKeyName(f.field_type.resolvedType!! as ASTModel));
+            }
         }
         res += '\n    ' + name + ': ' + type + ';';
     }
@@ -92,12 +98,14 @@ function generateModel(src: ASTModel): string {
     res += 'export interface ' + src.name.name + ' extends sequelize.Instance<Partial<' + src.name.name + 'Attributes>>, ' + src.name.name + 'Attributes {';
     for (let f of src.fields) {
         if (f.field_type.type === 'type_reference') {
-            let type = f.field_type.resolvedType!!.name.name;
-            let name = f.name.name;
-            if (!f.field_type.required) {
-                type += ' | null';
+            if (f.field_type.resolvedType!!.type === 'model') {
+                let type = f.field_type.resolvedType!!.name.name;
+                let name = f.name.name;
+                if (!f.field_type.required) {
+                    type += ' | null';
+                }
+                res += '\n    ' + name + ': ' + type + ' | undefined;';
             }
-            res += '\n    ' + name + ': ' + type + ' | undefined;';
             // res += '\n    get' + capitalize(name) + '(options?: any): Promise<' + type + '>;';
         }
     }
@@ -105,13 +113,15 @@ function generateModel(src: ASTModel): string {
     res += '\n    readonly updatedAt: Date;';
     for (let f of src.fields) {
         if (f.field_type.type === 'type_reference') {
-            let type = f.field_type.resolvedType!!.name.name;
-            let name = f.name.name;
-            if (!f.field_type.required) {
-                type += ' | null';
+            if (f.field_type.resolvedType!!.type === 'model') {
+                let type = f.field_type.resolvedType!!.name.name;
+                let name = f.name.name;
+                if (!f.field_type.required) {
+                    type += ' | null';
+                }
+                // res += '\n    ' + name + ': ' + type + ' | undefined;';
+                res += '\n    get' + capitalize(name) + '(options?: any): Promise<' + type + '>;';
             }
-            // res += '\n    ' + name + ': ' + type + ' | undefined;';
-            res += '\n    get' + capitalize(name) + '(options?: any): Promise<' + type + '>;';
         }
     }
     res += '\n}\n';

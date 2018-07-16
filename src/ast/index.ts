@@ -83,7 +83,7 @@ export interface ASTType extends ASTBaseNode {
     name: string;
     id: ASTId;
     required: boolean;
-    resolvedType?: ASTModel;
+    resolvedType: ASTModel | ASTEnum;
 }
 
 export interface ASTModifier extends ASTBaseNode {
