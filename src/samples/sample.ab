@@ -12,6 +12,8 @@ model User {
     primary field id: int!
 }
 
+enum A = 'hello' | 'world' | 'now';
+
 model Profile {
     primary field id: int!
     field user: User!

@@ -17,7 +17,7 @@ interface ParserException {
     };
 }
 
-function location(start?: number, end?: number) {
+function location(start?: number | string, end?: number | string) {
     let s = start || 1;
     let e = end || 1;
     return ', ' +
@@ -37,7 +37,7 @@ export class AbsynthParser {
             lex: {
                 rules: lexerTable.map((v) => [v[0], v[1] !== '' ? 'return \'' + v[1] + '\';' : '']),
             },
-            bnf: {
+            ebnf: {
 
                 //
                 // Program Root
@@ -116,12 +116,10 @@ export class AbsynthParser {
                 ],
 
                 'statement': [
-                    ['call', '$$ = $1;'],
-                    ['call T_SEMICOLON', '$$ = $1;'],
-                    ['assignment', '$$ = $1;'],
-                    ['assignment T_SEMICOLON', '$$ = $1;'],
-                    ['T_RETURN expression', '$$ = {type:\'return\', expression: $2' + location(1, 2) + ' }'],
-                    ['T_RETURN expression T_SEMICOLON', '$$ = {type:\'return\', expression: $2' + location(1, 3) + '}']
+                    ['call T_SEMICOLON?', '$$ = $1;'],
+                    ['assignment T_SEMICOLON?', '$$ = $1;'],
+                    ['T_RETURN expression T_SEMICOLON?', '$$ = {type:\'return\', expression: $2' + location(1, 2) + ' }'],
+                    ['declaration_enum T_SEMICOLON?', '$$ = $1;']
                 ],
 
                 //
@@ -130,6 +128,12 @@ export class AbsynthParser {
 
                 'declaration_variable': [['T_LET IDENTIFIER', '$$ = {type: \'declaration\', name: yytext ' + location(1) + '};']],
                 'assignment': [['declaration_variable EQUALS expression', '$$ = {type: \'assignment\', left: $1, right: $3' + location(1, 3) + '};']],
+
+                //
+                // Enum
+                //
+
+                'declaration_enum': [['T_ENUM id EQUALS (constant_string[v] (T_BAR constant_string[v])*)[values]', '$$ = {type: \'enum\', name: $2, values: [$values[0], ...$values[1].map((v)=>v[1])]' + location(1, 'values') + '};']],
 
                 //
                 // Global function call
@@ -189,7 +193,7 @@ export class AbsynthParser {
         return this.parser.parse(source);
     }
 
-    parseDiagnostics(source: string): number[] | undefined {
+    parseDiagnostics(source: string): { loc: number[], msg: string } | undefined {
         try {
             this.parser.parse(source);
         } catch (e) {
@@ -198,10 +202,10 @@ export class AbsynthParser {
             if (ex.hash.loc) {
                 console.log('Lexer error');
                 console.log(ex.hash.loc);
-                console.log(ex.hash);
-                return ex.hash.loc.range;
+                // console.log(ex.hash);
+                return { loc: ex.hash.loc.range, msg: e.message };
             } else {
-                console.log((ex as any).hash);
+                // console.log((ex as any).hash);
             }
             // console.warn(ex.hash.lexer.index);
             // console.warn(ex.hash.lexer !== this.lexer.lexerInstance());

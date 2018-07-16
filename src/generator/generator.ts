@@ -186,7 +186,10 @@ function generateStatement(src: ASTNode): string {
         return '{\n' + res + '\n}';
     } else if (src.type === 'model') {
         return generateModel(src);
+    } else if (src.type === 'enum') {
+        return 'type ' + src.name.name + ' = ' + src.values.map((v) => '\'' + v.value + '\'').join(' | ') + ';';
     } else {
+        console.log(JSON.stringify(src));
         throw new GeneratorException('Unsupported mode', src);
     }
 }

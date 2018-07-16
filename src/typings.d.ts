@@ -17,7 +17,10 @@ declare module 'jison-gho' {
         lex?: {
             rules: string[][]
         },
-        bnf: {
+        bnf?: {
+            [key: string]: string[][]
+        },
+        ebnf?: {
             [key: string]: string[][]
         },
         operators?: string[][]

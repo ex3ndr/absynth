@@ -136,10 +136,10 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
         let diagnosic: Diagnostic = {
             severity: DiagnosticSeverity.Error,
             range: {
-                start: textDocument.positionAt(res[0]),
-                end: textDocument.positionAt(res[1])
+                start: textDocument.positionAt(res.loc[0]),
+                end: textDocument.positionAt(res.loc[1])
             },
-            message: `Unexpected symbol`,
+            message: res.msg,
             source: 'absynth'
         };
         diagnostics.push(diagnosic);

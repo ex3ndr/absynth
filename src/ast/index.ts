@@ -91,6 +91,12 @@ export interface ASTModifier extends ASTBaseNode {
     name: string;
 }
 
+export interface ASTEnum extends ASTBaseNode {
+    type: 'enum';
+    name: ASTId;
+    values: ASTString[];
+}
+
 export type ASTExpression = ASTOperation | ASTNumber | ASTString | ASTReference;
 
-export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField;
+export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField | ASTEnum;
