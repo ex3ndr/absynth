@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser parse simple assignment expression with calculus 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 17,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 17,
+      "last_line": 1,
+      "left": Object {
+        "first_column": 0,
+        "first_line": 1,
+        "last_column": 3,
+        "last_line": 1,
+        "name": "i",
+        "type": "declaration",
+      },
+      "right": Object {
+        "first_column": 8,
+        "first_line": 1,
+        "last_column": 17,
+        "last_line": 1,
+        "left": Object {
+          "first_column": 8,
+          "first_line": 1,
+          "last_column": 11,
+          "last_line": 1,
+          "type": "number",
+          "value": 123,
+        },
+        "op": "+",
+        "right": Object {
+          "first_column": 14,
+          "first_line": 1,
+          "last_column": 17,
+          "last_line": 1,
+          "left": Object {
+            "first_column": 14,
+            "first_line": 1,
+            "last_column": 15,
+            "last_line": 1,
+            "type": "number",
+            "value": 1,
+          },
+          "op": "/",
+          "right": Object {
+            "first_column": 16,
+            "first_line": 1,
+            "last_column": 17,
+            "last_line": 1,
+            "type": "number",
+            "value": 2,
+          },
+          "type": "operation",
+        },
+        "type": "operation",
+      },
+      "type": "assignment",
+    },
+  ],
+}
+`;
+
+exports[`Parser parse simple assignment expression with strings 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 13,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 13,
+      "last_line": 1,
+      "left": Object {
+        "first_column": 0,
+        "first_line": 1,
+        "last_column": 3,
+        "last_line": 1,
+        "name": "i",
+        "type": "declaration",
+      },
+      "right": Object {
+        "first_column": 8,
+        "first_line": 1,
+        "last_column": 13,
+        "last_line": 1,
+        "type": "string",
+        "value": "123",
+      },
+      "type": "assignment",
+    },
+  ],
+}
+`;
+
+exports[`Parser should handle braces 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 11,
+  "last_line": 4,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 3,
+      "last_column": 9,
+      "last_line": 4,
+      "statements": Array [
+        Object {
+          "arguments": Array [],
+          "first_column": 0,
+          "first_line": 3,
+          "last_column": 9,
+          "last_line": 3,
+          "name": "println",
+          "type": "call",
+        },
+        Object {
+          "arguments": Array [],
+          "first_column": 0,
+          "first_line": 4,
+          "last_column": 9,
+          "last_line": 4,
+          "name": "println",
+          "type": "call",
+        },
+      ],
+      "type": "statements",
+    },
+  ],
+}
+`;
+
+exports[`Parser should handle braces 2`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 10,
+  "last_line": 2,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 1,
+      "first_line": 1,
+      "last_column": 9,
+      "last_line": 2,
+      "statements": Array [
+        Object {
+          "arguments": Array [],
+          "first_column": 1,
+          "first_line": 1,
+          "last_column": 10,
+          "last_line": 1,
+          "name": "println",
+          "type": "call",
+        },
+        Object {
+          "arguments": Array [],
+          "first_column": 0,
+          "first_line": 2,
+          "last_column": 9,
+          "last_line": 2,
+          "name": "println",
+          "type": "call",
+        },
+      ],
+      "type": "statements",
+    },
+  ],
+}
+`;
+
+exports[`Parser should handle braces 3`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 1,
+  "last_line": 3,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 2,
+      "last_column": 10,
+      "last_line": 2,
+      "statements": Array [
+        Object {
+          "arguments": Array [],
+          "first_column": 0,
+          "first_line": 2,
+          "last_column": 9,
+          "last_line": 2,
+          "name": "println",
+          "type": "call",
+        },
+      ],
+      "type": "statements",
+    },
+  ],
+}
+`;
+
+exports[`Parser should handle empty lines 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 3,
+  "last_column": 9,
+  "last_line": 4,
+  "type": "program",
+  "value": Array [
+    Object {
+      "arguments": Array [],
+      "first_column": 0,
+      "first_line": 3,
+      "last_column": 9,
+      "last_line": 3,
+      "name": "println",
+      "type": "call",
+    },
+    Object {
+      "arguments": Array [],
+      "first_column": 0,
+      "first_line": 4,
+      "last_column": 9,
+      "last_line": 4,
+      "name": "println",
+      "type": "call",
+    },
+  ],
+}
+`;
+
+exports[`Parser should handle modules 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 18,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 18,
+      "last_line": 1,
+      "modifiers": Array [],
+      "name": Object {
+        "first_column": 6,
+        "first_line": 1,
+        "last_column": 14,
+        "last_line": 1,
+        "type": "string",
+        "value": "Module",
+      },
+      "statements": Object {
+        "first_column": 15,
+        "first_line": 1,
+        "last_column": 18,
+        "last_line": 1,
+        "statements": Array [],
+        "type": "statements",
+      },
+      "type": "model",
+    },
+  ],
+}
+`;
+
+exports[`Parser should parse calls 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 9,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "arguments": Array [],
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 9,
+      "last_line": 1,
+      "name": "println",
+      "type": "call",
+    },
+  ],
+}
+`;
+
+exports[`Parser should parse calls 2`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 17,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "arguments": Array [
+        Object {
+          "first_column": 8,
+          "first_line": 1,
+          "last_column": 11,
+          "last_line": 1,
+          "type": "number",
+          "value": 123,
+        },
+        Object {
+          "first_column": 12,
+          "first_line": 1,
+          "last_column": 16,
+          "last_line": 1,
+          "type": "number",
+          "value": 3444,
+        },
+      ],
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 17,
+      "last_line": 1,
+      "name": "println",
+      "type": "call",
+    },
+  ],
+}
+`;
+
+exports[`Parser should parse calls multiple lines 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 9,
+  "last_line": 2,
+  "type": "program",
+  "value": Array [
+    Object {
+      "arguments": Array [],
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 9,
+      "last_line": 1,
+      "name": "println",
+      "type": "call",
+    },
+    Object {
+      "arguments": Array [],
+      "first_column": 0,
+      "first_line": 2,
+      "last_column": 9,
+      "last_line": 2,
+      "name": "println",
+      "type": "call",
+    },
+  ],
+}
+`;
+
+exports[`Parser should parse statements 1`] = `
+Object {
+  "first_column": 0,
+  "first_line": 1,
+  "last_column": 29,
+  "last_line": 1,
+  "type": "program",
+  "value": Array [
+    Object {
+      "first_column": 0,
+      "first_line": 1,
+      "last_column": 17,
+      "last_line": 1,
+      "left": Object {
+        "first_column": 0,
+        "first_line": 1,
+        "last_column": 3,
+        "last_line": 1,
+        "name": "i",
+        "type": "declaration",
+      },
+      "right": Object {
+        "first_column": 8,
+        "first_line": 1,
+        "last_column": 17,
+        "last_line": 1,
+        "left": Object {
+          "first_column": 8,
+          "first_line": 1,
+          "last_column": 11,
+          "last_line": 1,
+          "type": "number",
+          "value": 123,
+        },
+        "op": "+",
+        "right": Object {
+          "first_column": 14,
+          "first_line": 1,
+          "last_column": 17,
+          "last_line": 1,
+          "left": Object {
+            "first_column": 14,
+            "first_line": 1,
+            "last_column": 15,
+            "last_line": 1,
+            "type": "number",
+            "value": 1,
+          },
+          "op": "/",
+          "right": Object {
+            "first_column": 16,
+            "first_line": 1,
+            "last_column": 17,
+            "last_line": 1,
+            "type": "number",
+            "value": 2,
+          },
+          "type": "operation",
+        },
+        "type": "operation",
+      },
+      "type": "assignment",
+    },
+    Object {
+      "first_column": 19,
+      "first_line": 1,
+      "last_column": 28,
+      "last_line": 1,
+      "left": Object {
+        "first_column": 19,
+        "first_line": 1,
+        "last_column": 22,
+        "last_line": 1,
+        "name": "j",
+        "type": "declaration",
+      },
+      "right": Object {
+        "first_column": 27,
+        "first_line": 1,
+        "last_column": 28,
+        "last_line": 1,
+        "type": "number",
+        "value": 0,
+      },
+      "type": "assignment",
+    },
+  ],
+}
+`;

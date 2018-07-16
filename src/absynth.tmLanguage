@@ -23,12 +23,12 @@
 			<key>match</key>
 			<string>\b([a-zA-Z_][a-zA-Z_0-9]*)\b</string>
 			<key>name</key>
-			<string>variable.function.language.absynth</string>
+			<string>entity.name.function.absynth</string>
 		</dict>
 		<key>keyword</key>
 		<dict>
 			<key>match</key>
-			<string>\b(?:declare|model|let)\b</string>
+			<string>\b(?:declare|model|let|private|public)\b</string>
 			<key>name</key>
 			<string>keyword.language.absynth</string>
 		</dict>

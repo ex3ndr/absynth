@@ -18,6 +18,6 @@ describe('Lexer', () => {
         expect(lexer.lex('(println)')).toEqual(['T_BRACKET_OPEN', 'IDENTIFIER', 'T_BRACKET_CLOSE']);
     });
     it('should parse keywords', () => {
-        expect(lexer.lex('model \'Module\'')).toEqual(['T_KEYWORD', 'STRING']);
+        expect(lexer.lex('model \'Module\'')).toEqual(['T_MODEL', 'STRING']);
     });
 });

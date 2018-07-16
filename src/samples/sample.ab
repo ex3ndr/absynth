@@ -1,6 +1,13 @@
-declare 'Model' {
-    println(asd, 'asd');
-    printaaa();
-    asdadasd();
+println(a + '');
+println('asd' + 'aaa');
+
+let a = '';
+
+{
     let a = '';
+    println(a + '')
+}
+
+model 'User' {
+
 }

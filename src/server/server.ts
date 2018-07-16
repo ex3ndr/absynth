@@ -9,10 +9,12 @@ import {
     DidChangeConfigurationNotification,
     CompletionItem,
     CompletionItemKind,
-    TextDocumentPositionParams
+    TextDocumentPositionParams,
+    Position
 } from 'vscode-languageserver/lib/main';
-import { AbsynthLexer } from '../lexer';
-import { AbsynthParser } from '../parser';
+import { AbsynthLexer } from '../ast/lexer';
+import { AbsynthParser } from '../ast/parser';
+import { AbsynthGenerator, GeneratorException } from '../generator/generator';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -130,17 +132,36 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     let parser = new AbsynthParser();
     let res = parser.parseDiagnostics(text);
 
-    if (res >= 0) {
+    if (res) {
         let diagnosic: Diagnostic = {
             severity: DiagnosticSeverity.Error,
             range: {
-                start: textDocument.positionAt(res - 1),
-                end: textDocument.positionAt(res)
+                start: textDocument.positionAt(res[0]),
+                end: textDocument.positionAt(res[1])
             },
             message: `Unexpected symbol`,
             source: 'absynth'
         };
         diagnostics.push(diagnosic);
+    } else {
+        let gen = new AbsynthGenerator();
+        try {
+            let generated = gen.generate(parser.parse(text));
+            console.log(generated);
+        } catch (e) {
+            let ex = e as GeneratorException;
+            console.log(ex);
+            let diagnosic: Diagnostic = {
+                severity: DiagnosticSeverity.Error,
+                range: {
+                    start: Position.create(ex.node.first_line - 1, ex.node.first_column),
+                    end: Position.create(ex.node.last_line - 1, ex.node.last_column)
+                },
+                message: ex.message,
+                source: 'absynth'
+            };
+            diagnostics.push(diagnosic);
+        }
     }
 
     // while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {
