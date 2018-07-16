@@ -46,7 +46,7 @@ describe('Parser', () => {
 
     it('should handle modules', () => {
         let parser = new AbsynthParser();
-        let res = parser.parse('model \'Module\' { }');
+        let res = parser.parse(`model Module { field name: string }`);
         expect(res).toMatchSnapshot();
     });
 });

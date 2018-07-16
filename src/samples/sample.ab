@@ -8,6 +8,33 @@ let a = '';
     println(a + '')
 }
 
-model 'User' {
+model User {
+    primary field id: int!
+}
 
+model Profile {
+    primary field id: int!
+    field user: User!
+    field firstName: string!
+    field lastName: string
+    field phone: string
+    field picture: string
+    field about: string
+    field website: string
+    field location: string
+    field email: string
+}
+
+model Organization {
+    primary field id: int!
+}
+
+model Conversation {
+    primary field id: int!
+    field title: string!
+    field seq: int!
+    field member1: User
+    field member2: User
+    field organization1: Organization
+    field organization2: Organization
 }

@@ -8,7 +8,10 @@ export let lexerTable = [
     ['let', 'T_LET'],
     ['return', 'T_RETURN'],
     ['model', 'T_MODEL'],
-    ['(private|public|readonly|index)', 'T_MODIFIER'],
+    ['field', 'T_FIELD'],
+    ['enum', 'T_ENUM'],
+    ['(private|public|readonly|index|primary)', 'T_MODIFIER'],
+    ['(string|int|float)', 'T_PRIMITIVE'],
     ['\\+', 'T_PLUS'],
     ['\\-', 'T_MINUS'],
     ['\\/', 'T_DIV'],
@@ -16,11 +19,15 @@ export let lexerTable = [
     ['=', 'EQUALS'],
     ['[a-zA-Z_][a-zA-Z_0-9]*', 'IDENTIFIER'],
     [';', 'T_SEMICOLON'],
+    [':', 'T_COLON'],
     ['\\,', 'T_COMMA'],
     ['\\(', 'T_BRACKET_OPEN'],
     ['\\)', 'T_BRACKET_CLOSE'],
     ['{', 'T_BRACE_OPEN'],
-    ['}', 'T_BRACE_CLOSE']
+    ['}', 'T_BRACE_CLOSE'],
+    ['\\!', 'T_EXCLAMATION'],
+    ['\\?', 'T_QUESTION'],
+    ['\\|', 'T_BAR']
 ];
 
 export class AbsynthLexer {

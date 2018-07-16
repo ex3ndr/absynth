@@ -28,7 +28,7 @@
 		<key>keyword</key>
 		<dict>
 			<key>match</key>
-			<string>\b(?:declare|model|let|private|public)\b</string>
+			<string>\b(?:declare|model|let|private|public|readonly|field|int|string|primary)\b</string>
 			<key>name</key>
 			<string>keyword.language.absynth</string>
 		</dict>

@@ -65,7 +65,23 @@ export class AbsynthParser {
                 //
 
                 'model': [
-                    ['modifiers T_MODEL constant_string statements_block', '$$ = {type:\'model\', modifiers: $1, name: $3, statements: $4' + location(2, 4) + '};']
+                    ['modifiers T_MODEL id model_fields_block', '$$ = {type:\'model\', modifiers: $1, name: $3, fields: $4' + location(2, 4) + '};']
+                ],
+
+                'model_fields_block': [
+                    ['T_BRACE_OPEN model_fields T_BRACE_CLOSE', '$$ = $2'],
+                    ['T_BRACE_OPEN T_BRACE_CLOSE', '$$ = [];'],
+                    //   ['model_block model_field'],
+                    //   ['model_field']
+                ],
+
+                'model_fields': [
+                    ['model_fields model_field', '$$ = [...$1, $2];'],
+                    ['model_field', '$$ = [$1];']
+                ],
+
+                'model_field': [
+                    ['modifiers T_FIELD id T_COLON type', '$$ = {type:\'field\', modifiers: $1, name: $3, field_type: $5' + location(2, 5) + '}']
                 ],
 
                 'modifiers': [
@@ -76,6 +92,13 @@ export class AbsynthParser {
 
                 'modifier': [
                     ['T_MODIFIER', '$$ = {type:\'modifier\', name: yytext' + location(1) + '}']
+                ],
+
+                'type': [
+                    ['T_PRIMITIVE', '$$ = {type:\'type_primitive\', required: false, name: yytext' + location(1) + '}'],
+                    ['T_PRIMITIVE T_EXCLAMATION', '$$ = {type:\'type_primitive\', required: true, name: $1' + location(1) + '}'],
+                    ['id', '$$ = {type:\'type_reference\', required: false, id: $1' + location(1) + '}'],
+                    ['id T_EXCLAMATION', '$$ = {type:\'type_reference\', required: true, id: $1' + location(1) + '}']
                 ],
 
                 //
@@ -146,6 +169,9 @@ export class AbsynthParser {
                     ['IDENTIFIER', '$$ = {type: \'reference\', name: yytext' + location(1) + '};'],
                     ['constant_number', '$$ = $1;'],
                     ['constant_string', '$$ = $1;'],
+                ],
+                'id': [
+                    ['IDENTIFIER', '$$ = {type: \'id\', name: yytext' + location(1) + '};'],
                 ],
                 'constant_number': [
                     ['NUMBER_HEX', '$$ = {type: \'number\', value: parseInt(yytext)' + location(1) + '};'],

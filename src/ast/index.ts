@@ -61,9 +61,29 @@ export interface ASTCall extends ASTBaseNode {
 
 export interface ASTModel extends ASTBaseNode {
     type: 'model';
-    name: ASTString;
+    name: ASTId;
     modifiers: ASTModifier[];
-    statements: ASTStatements;
+    fields: ASTModelField[];
+}
+
+export interface ASTId extends ASTBaseNode {
+    type: 'id';
+    name: string;
+}
+
+export interface ASTModelField extends ASTBaseNode {
+    type: 'field';
+    name: ASTId;
+    field_type: ASTType;
+    modifiers: ASTModifier[];
+}
+
+export interface ASTType extends ASTBaseNode {
+    type: 'type_primitive' | 'type_reference';
+    name: string;
+    id: ASTId;
+    required: boolean;
+    resolvedType?: ASTModel;
 }
 
 export interface ASTModifier extends ASTBaseNode {
@@ -73,4 +93,4 @@ export interface ASTModifier extends ASTBaseNode {
 
 export type ASTExpression = ASTOperation | ASTNumber | ASTString | ASTReference;
 
-export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier;
+export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField;
