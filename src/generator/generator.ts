@@ -8,16 +8,31 @@ function generateExpression(src: ASTExpression): string {
         return '' + src.value;
     } else if (src.type === 'reference') {
         return src.name;
-    } else if (src.op === '+') {
-        return generateExpression(src.left) + ' + ' + generateExpression(src.right);
-    } else if (src.op === '-') {
-        return generateExpression(src.left) + ' - ' + generateExpression(src.right);
-    } else if (src.op === '/') {
-        return generateExpression(src.left) + ' / ' + generateExpression(src.right);
-    } else if (src.op === '*') {
-        return generateExpression(src.left) + ' * ' + generateExpression(src.right);
+    } else if (src.type === 'boolean') {
+        return '' + src.value + '';
+    } else if (src.type === 'operation') {
+        if (src.op === '+') {
+            return '(' + generateExpression(src.left) + ' + ' + generateExpression(src.right) + ')';
+        } else if (src.op === '-') {
+            return '(' + generateExpression(src.left) + ' - ' + generateExpression(src.right) + ')';
+        } else if (src.op === '/') {
+            return '(' + generateExpression(src.left) + ' / ' + generateExpression(src.right) + ')';
+        } else if (src.op === '*') {
+            return '(' + generateExpression(src.left) + ' * ' + generateExpression(src.right) + ')';
+        } else {
+            throw new GeneratorException('Unknown optration: ' + src.op, src);
+        }
+    } else if (src.type === 'call') {
+        let actualName: string | undefined;
+        if (src.name === 'println') {
+            actualName = 'console.log';
+        }
+        if (!actualName) {
+            throw new GeneratorException('Unable to resolve ' + src.name, src);
+        }
+        return actualName + '(' + src.arguments.map(generateExpression).join(', ') + ')';
     } else {
-        throw new GeneratorException('Unknown expression: ' + src.type, src);
+        throw new GeneratorException('Unknown expression' + src, src);
     }
 }
 

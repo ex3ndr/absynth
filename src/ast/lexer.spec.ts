@@ -1,23 +1,26 @@
-import { AbsynthLexer } from './lexer';
+import { Absynth } from '../Absynth';
+import { Basics } from '../modules/Basics';
+import { Expressions } from '../modules/Expressions';
+import { Experiments } from '../modules/Experiments';
 
 describe('Lexer', () => {
-    let lexer: AbsynthLexer;
+    let absynth: Absynth;
     beforeAll(() => {
-        lexer = new AbsynthLexer();
+        absynth = new Absynth([new Basics(), new Expressions(), new Experiments()]);
     });
     it('should parse numbers and hex numbers', () => {
-        expect(lexer.lex('0xAAA 0xBBB  123')).toEqual(['NUMBER_HEX', 'NUMBER_HEX', 'NUMBER']);
+        expect(absynth.lexer.lex('0xAAA 0xBBB  123')).toEqual(['NUMBER_HEX', 'NUMBER_HEX', 'NUMBER']);
     });
     it('should parse strings', () => {
-        expect(lexer.lex('\'Some weird string\'')).toEqual(['STRING']);
+        expect(absynth.lexer.lex('\'Some weird string\'')).toEqual(['STRING']);
     });
     it('should parse idenitfiers', () => {
-        expect(lexer.lex('println')).toEqual(['IDENTIFIER']);
+        expect(absynth.lexer.lex('println')).toEqual(['IDENTIFIER']);
     });
     it('should parse backets', () => {
-        expect(lexer.lex('(println)')).toEqual(['T_BRACKET_OPEN', 'IDENTIFIER', 'T_BRACKET_CLOSE']);
+        expect(absynth.lexer.lex('(println)')).toEqual(['(', 'IDENTIFIER', ')']);
     });
     it('should parse keywords', () => {
-        expect(lexer.lex('model \'Module\'')).toEqual(['T_MODEL', 'STRING']);
+        expect(absynth.lexer.lex('model \'Module\'')).toEqual(['T_MODEL', 'STRING']);
     });
 });

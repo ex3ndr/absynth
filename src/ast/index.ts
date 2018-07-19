@@ -20,6 +20,11 @@ export interface ASTString extends ASTBaseNode {
     value: string;
 }
 
+export interface ASTBoolean extends ASTBaseNode {
+    type: 'boolean';
+    value: boolean;
+}
+
 export interface ASTDeclaration extends ASTBaseNode {
     type: 'declaration';
     name: string;
@@ -97,6 +102,6 @@ export interface ASTEnum extends ASTBaseNode {
     values: ASTString[];
 }
 
-export type ASTExpression = ASTOperation | ASTNumber | ASTString | ASTReference;
+export type ASTExpression = ASTOperation | ASTNumber | ASTString | ASTReference | ASTBoolean | ASTCall;
 
-export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField | ASTEnum;
+export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField | ASTEnum | ASTBoolean;

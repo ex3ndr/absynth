@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Generator should generate simple statements 1`] = `
-"console.log('Hello' + ' ' + 'World!');
-console.log(123 + 6 / 2);"
+"console.log((('Hello' + ' ') + 'World!'));
+console.log((123 + (6 / 2)));"
 `;

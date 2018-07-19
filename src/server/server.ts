@@ -15,6 +15,11 @@ import {
 import { AbsynthLexer } from '../ast/lexer';
 import { AbsynthParser } from '../ast/parser';
 import { AbsynthGenerator, GeneratorException } from '../generator/generator';
+import { Absynth } from '../Absynth';
+import { Basics } from '../modules/Basics';
+import { Expressions } from '../modules/Expressions';
+import { Experiments } from '../modules/Experiments';
+import { AllModules } from '../modules/AllModules';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -129,39 +134,52 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     // The validator creates diagnostics for all uppercase words length 2 and more
     let text = textDocument.getText();
     let diagnostics: Diagnostic[] = [];
-    let parser = new AbsynthParser();
-    let res = parser.parseDiagnostics(text);
+    if (text.startsWith('@@absynth')) {
+        let parser = Absynth.create(text, AllModules());
+        let res = parser.parser.parseDiagnostics(text);
 
-    if (res) {
-        let diagnosic: Diagnostic = {
-            severity: DiagnosticSeverity.Error,
-            range: {
-                start: textDocument.positionAt(res.loc[0]),
-                end: textDocument.positionAt(res.loc[1])
-            },
-            message: res.msg,
-            source: 'absynth'
-        };
-        diagnostics.push(diagnosic);
-    } else {
-        let gen = new AbsynthGenerator();
-        try {
-            let generated = gen.generate(parser.parse(text));
-            console.log(generated);
-        } catch (e) {
-            let ex = e as GeneratorException;
-            console.log(ex);
+        if (res) {
             let diagnosic: Diagnostic = {
                 severity: DiagnosticSeverity.Error,
                 range: {
-                    start: Position.create(ex.node.first_line - 1, ex.node.first_column),
-                    end: Position.create(ex.node.last_line - 1, ex.node.last_column)
+                    start: textDocument.positionAt(res.loc[0]),
+                    end: textDocument.positionAt(res.loc[1])
                 },
-                message: ex.message,
+                message: res.msg,
                 source: 'absynth'
             };
             diagnostics.push(diagnosic);
+        } else {
+            let gen = new AbsynthGenerator();
+            try {
+                let generated = gen.generate(parser.parser.parse(text));
+                console.log(generated);
+            } catch (e) {
+                let ex = e as GeneratorException;
+                console.log(ex);
+                let diagnosic: Diagnostic = {
+                    severity: DiagnosticSeverity.Error,
+                    range: {
+                        start: Position.create(ex.node.first_line - 1, ex.node.first_column),
+                        end: Position.create(ex.node.last_line - 1, ex.node.last_column)
+                    },
+                    message: ex.message,
+                    source: 'absynth'
+                };
+                diagnostics.push(diagnosic);
+            }
         }
+    } else {
+        let diagnosic: Diagnostic = {
+            severity: DiagnosticSeverity.Error,
+            range: {
+                start: Position.create(0, 0),
+                end: Position.create(0, 0)
+            },
+            message: 'No @@absynth keyword',
+            source: 'absynth'
+        };
+        diagnostics.push(diagnosic);
     }
 
     // while ((m = pattern.exec(text)) && problems < settings.maxNumberOfProblems) {

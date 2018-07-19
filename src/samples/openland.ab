@@ -1,0 +1,23 @@
+@@absynth(basics,graphql)
+type User {
+    id: ID!
+    name: String!
+    firstName: String!
+    lastName: String
+    picture: String
+    pictureRef: ImageRef
+    photo: String
+    photoRef: ImageRef
+    phone: String
+    email: String
+    website: String
+    about: String
+    location: String
+    isYou: Boolean!
+    isCreated: Boolean!
+    isBot: Boolean!
+}
+
+interface UpdateProfileInput {
+    
+}

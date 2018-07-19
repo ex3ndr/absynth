@@ -1,3 +1,4 @@
+@@absynth(basics,expressions,experiments)
 enum UserStatus = 'PENDING' | 'ACTIVATED' | 'SUSPENDED';
 
 model User {

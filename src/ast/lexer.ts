@@ -1,41 +1,11 @@
 import Lexer from 'lex';
 
-export let lexerTable = [
-    ['\\s+', ''],
-    ['0x[a-fA-F\\d]+', 'NUMBER_HEX'],
-    ['\\d+', 'NUMBER'],
-    ['\\\'(\\.|[^\\\'])*\\\'', 'STRING'],
-    ['let', 'T_LET'],
-    ['return', 'T_RETURN'],
-    ['model', 'T_MODEL'],
-    ['field', 'T_FIELD'],
-    ['enum', 'T_ENUM'],
-    ['(private|public|readonly|index|primary)', 'T_MODIFIER'],
-    ['(string|int|float)', 'T_PRIMITIVE'],
-    ['\\+', 'T_PLUS'],
-    ['\\-', 'T_MINUS'],
-    ['\\/', 'T_DIV'],
-    ['\\*', 'T_MULT'],
-    ['=', 'EQUALS'],
-    ['[a-zA-Z_][a-zA-Z_0-9]*', 'IDENTIFIER'],
-    [';', 'T_SEMICOLON'],
-    [':', 'T_COLON'],
-    ['\\,', 'T_COMMA'],
-    ['\\(', 'T_BRACKET_OPEN'],
-    ['\\)', 'T_BRACKET_CLOSE'],
-    ['{', 'T_BRACE_OPEN'],
-    ['}', 'T_BRACE_CLOSE'],
-    ['\\!', 'T_EXCLAMATION'],
-    ['\\?', 'T_QUESTION'],
-    ['\\|', 'T_BAR']
-];
-
 export class AbsynthLexer {
     private lexer: Lexer;
-    constructor() {
+    constructor(table: string[][]) {
         this.lexer = new Lexer();
 
-        for (let rules of lexerTable) {
+        for (let rules of table) {
             this.lexer.addRule(new RegExp(rules[0]), function (lexeme: string) {
                 this.yytext = lexeme;
                 if (rules[1] === '') {
