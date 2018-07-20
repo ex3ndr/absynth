@@ -1,11 +1,11 @@
 import { AbsynthParser } from './parser';
 import { Absynth } from '../Absynth';
-import { Basics } from '../modules/Basics';
-import { Expressions } from '../modules/Expressions';
-import { Experiments } from '../modules/Experiments';
+import { ModuleCore } from '../modules/ModuleCore';
+import { ModuleExpressions } from '../modules/ModuleExpressions';
+import { ModuleExperimental } from '../modules/experimental';
 
 function createParser() {
-    return new Absynth([new Basics(), new Expressions(), new Experiments()]).parser;
+    return new Absynth([new ModuleCore(), new ModuleExpressions(), new ModuleExperimental()]).parser;
 }
 
 describe('Parser', () => {

@@ -1,4 +1,5 @@
-@@absynth(basics,graphql)
+@@absynth(core,graphql)
+
 type User {
     id: ID!
     name: String!
@@ -16,8 +17,5 @@ type User {
     isYou: Boolean!
     isCreated: Boolean!
     isBot: Boolean!
-}
-
-interface UpdateProfileInput {
-    
+    something: [String]
 }

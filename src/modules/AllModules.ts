@@ -1,6 +1,6 @@
-import { Experiments } from "./Experiments";
-import { Expressions } from "./Expressions";
-import { Basics } from "./Basics";
-import { Graphql } from "./Graphql";
+import { ModuleExperimental } from "./experimental";
+import { Graphql } from "./graphql";
+import { ModuleExpressions } from "./ModuleExpressions";
+import { ModuleCore } from "./ModuleCore";
 
-export const AllModules = () => [new Experiments(), new Expressions(), new Basics(), new Graphql()];
+export const AllModules = () => [new ModuleExperimental(), new ModuleExpressions(), new ModuleCore(), new Graphql()];

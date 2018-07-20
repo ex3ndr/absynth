@@ -12,14 +12,9 @@ import {
     TextDocumentPositionParams,
     Position
 } from 'vscode-languageserver/lib/main';
-import { AbsynthLexer } from '../ast/lexer';
-import { AbsynthParser } from '../ast/parser';
-import { AbsynthGenerator, GeneratorException } from '../generator/generator';
 import { Absynth } from '../Absynth';
-import { Basics } from '../modules/Basics';
-import { Expressions } from '../modules/Expressions';
-import { Experiments } from '../modules/Experiments';
 import { AllModules } from '../modules/AllModules';
+import { GeneratorException } from '../modules/core/GeneratorException';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -150,10 +145,13 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
             };
             diagnostics.push(diagnosic);
         } else {
-            let gen = new AbsynthGenerator();
+            
+            // let gen = new AbsynthGenerator();
             try {
-                let generated = gen.generate(parser.parser.parse(text));
-                console.log(generated);
+                if (parser.canGenerate()) {
+                    let generated = parser.generate(text);
+                    console.log(generated);
+                }                
             } catch (e) {
                 let ex = e as GeneratorException;
                 console.log(ex);

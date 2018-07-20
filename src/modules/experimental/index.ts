@@ -1,15 +1,27 @@
-import { Module, ModuleContext, ModuleOverlord, location } from './_Base';
-import { Basics } from './Basics';
+import { Module } from "../core/Module";
+import { ASTProgram } from "../../parser";
+import { ModuleResolver } from "../core/ModuleResolver";
+import { ModuleCore } from "../ModuleCore";
+import { ModuleContext } from "../core/ModuleContext";
+import { location } from "../core/utils";
 
-export class Experiments extends Module {
+export class ModuleExperimental extends Module {
     static ID = 'experiments';
 
     getModuleId() {
-        return Experiments.ID;
+        return ModuleExperimental.ID;
     }
 
-    prepare(context: ModuleOverlord) {
-        let basicModule = context.getModuleById(Basics.ID) as Basics;
+    isGenerator() {
+        return false;
+    }
+
+    generate(src: ASTProgram): string {
+        throw Error('Not supported');
+    }
+
+    prepare(context: ModuleResolver) {
+        let basicModule = context.getModuleById(ModuleCore.ID) as ModuleCore;
         basicModule.addRootDeclaration('model');
         basicModule.addRootDeclaration('repo');
         basicModule.addRootDeclaration('statements_block');

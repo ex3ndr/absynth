@@ -1,12 +1,12 @@
 import { Absynth } from '../Absynth';
-import { Basics } from '../modules/Basics';
-import { Expressions } from '../modules/Expressions';
-import { Experiments } from '../modules/Experiments';
+import { ModuleCore } from '../modules/ModuleCore';
+import { ModuleExpressions } from '../modules/ModuleExpressions';
+import { ModuleExperimental } from '../modules/experimental';
 
 describe('Lexer', () => {
     let absynth: Absynth;
     beforeAll(() => {
-        absynth = new Absynth([new Basics(), new Expressions(), new Experiments()]);
+        absynth = new Absynth([new ModuleCore(), new ModuleExpressions(), new ModuleExperimental()]);
     });
     it('should parse numbers and hex numbers', () => {
         expect(absynth.lexer.lex('0xAAA 0xBBB  123')).toEqual(['NUMBER_HEX', 'NUMBER_HEX', 'NUMBER']);

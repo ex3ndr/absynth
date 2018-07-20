@@ -1,5 +1,5 @@
-export { AbsynthLexer } from './lexer';
-export { AbsynthParser } from './parser';
+// export { AbsynthLexer } from './lexer';
+// export { AbsynthParser } from './parser';
 
 // export type ASTNodeType = 'number' | 'string' | 'declaration' | 'assignment' | 'program' | 'operation' | 'statements';
 
@@ -8,6 +8,11 @@ interface ASTBaseNode {
     first_line: number;
     last_column: number;
     last_line: number;
+}
+
+export interface ASTGraphqlType extends ASTBaseNode {
+    type: 'type';
+    name: ASTId;
 }
 
 export interface ASTNumber extends ASTBaseNode {
@@ -104,4 +109,4 @@ export interface ASTEnum extends ASTBaseNode {
 
 export type ASTExpression = ASTOperation | ASTNumber | ASTString | ASTReference | ASTBoolean | ASTCall;
 
-export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField | ASTEnum | ASTBoolean;
+export type ASTNode = ASTNumber | ASTString | ASTDeclaration | ASTAssignment | ASTProgram | ASTOperation | ASTStatements | ASTCall | ASTModel | ASTModifier | ASTType | ASTId | ASTModelField | ASTEnum | ASTBoolean | ASTGraphqlType;

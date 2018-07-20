@@ -1,4 +1,4 @@
-@@absynth(basics,expressions,experiments)
+@@absynth(core,expressions,experiments)
 let m0 = 123 + 9;
 let m1 = 123 * 2;
 let m2 = 123 * 2 / 10;

@@ -1,5 +1,5 @@
-import { ASTModel, ASTProgram, ASTType, ASTNode, ASTEnum } from '../ast';
-import { GeneratorException } from './generator';
+import { ASTModel, ASTEnum, ASTProgram, ASTType } from '../parser';
+import { GeneratorException } from '../modules/core/GeneratorException';
 
 export class AbsynthScope {
     declaredModels = new Map<string, ASTModel | ASTEnum>();

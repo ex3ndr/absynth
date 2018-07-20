@@ -1,19 +1,31 @@
-import { Module, ModuleContext, forward, location, ModuleOverlord } from './_Base';
+import { Module } from "./core/Module";
+import { ASTProgram } from "../parser";
+import { ModuleResolver } from "./core/ModuleResolver";
+import { ModuleContext } from "./core/ModuleContext";
+import { forward, location } from "./core/utils";
 
-export class Expressions extends Module {
+export class ModuleExpressions extends Module {
     static ID = 'expressions';
 
     private anomicExpressions = new Set<string>();
 
     getModuleId() {
-        return Expressions.ID;
+        return ModuleExpressions.ID;
+    }
+
+    isGenerator() {
+        return false;
+    }
+
+    generate(src: ASTProgram): string {
+        throw Error('Not supported');
     }
 
     registerAtomicExpression(expression: string) {
         this.anomicExpressions.add(expression);
     }
 
-    prepare(context: ModuleOverlord) {
+    prepare(context: ModuleResolver) {
         // Do nothing
     }
 

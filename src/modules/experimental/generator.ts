@@ -1,5 +1,6 @@
-import { ASTProgram, ASTNode, ASTExpression, ASTModel, ASTType } from '../ast';
-import { AbsynthScope } from './scoping';
+import { AbsynthScope } from '../../scoping/scoping';
+import { ASTExpression, ASTModel, ASTType, ASTNode, ASTProgram } from '../../parser';
+import { GeneratorException } from '../core/GeneratorException';
 
 function generateExpression(src: ASTExpression): string {
     if (src.type === 'string') {
@@ -230,20 +231,9 @@ function generateProgram(src: ASTProgram): string {
     return res;
 }
 
-export class GeneratorException extends Error {
-    node: ASTNode;
-    constructor(message: string, node: ASTNode) {
-        super(message);
-        this.node = node;
-    }
-}
-
-export class AbsynthGenerator {
-
-    generate(src: ASTProgram): string {
-        let scope = new AbsynthScope();
-        scope.collectDeclarations(src);
-        scope.resolveReferences(src);
-        return generateProgram(src);
-    }
+export function experimentalGenerator(src: ASTProgram) {
+    let scope = new AbsynthScope();
+    scope.collectDeclarations(src);
+    scope.resolveReferences(src);
+    return generateProgram(src);
 }

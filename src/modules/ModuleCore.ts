@@ -1,19 +1,31 @@
-import { Module, ModuleContext, location, ModuleOverlord, forward } from './_Base';
+import { Module } from "./core/Module";
+import { ASTProgram } from "../parser";
+import { ModuleResolver } from "./core/ModuleResolver";
+import { ModuleContext } from "./core/ModuleContext";
+import { location, forward } from "./core/utils";
 
-export class Basics extends Module {
-    static ID = 'basics';
+export class ModuleCore extends Module {
+    static ID = 'core';
 
     private rootDeclarations = new Set<string>();
 
     getModuleId() {
-        return Basics.ID;
+        return ModuleCore.ID;
+    }
+
+    isGenerator() {
+        return false;
+    }
+    
+    generate(src: ASTProgram): string {
+        throw Error('Not supported');
     }
 
     addRootDeclaration(rule: string) {
         this.rootDeclarations.add(rule);
     }
 
-    prepare(context: ModuleOverlord) {
+    prepare(context: ModuleResolver) {
         // Do nothing
     }
 
@@ -44,6 +56,8 @@ export class Basics extends Module {
         context.registerLexeme('\\)', ')');
         context.registerLexeme('{', '{');
         context.registerLexeme('}', '}');
+        context.registerLexeme('\\[', '[');
+        context.registerLexeme('\\]', ']');
         context.registerLexeme('\\!', '!');
         context.registerLexeme('\\?', '?');
         context.registerLexeme('\\|', '|');
